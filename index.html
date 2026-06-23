@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STELLA_X — RESUME &amp; PORTFOLIO</title>
+<style>
+  :root {
+    --bg: #000;
+    --text: #fff;
+    --muted: #888;
+    --dim: #555;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+
+  /* ================================================================
+     HOME PAGE
+     ================================================================ */
+  .home {
+    position: relative; min-height: 100vh; display: flex; flex-direction: column;
+    padding: 0;
+  }
+
+  /* ---- top bar ---- */
+  .top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 32px 56px 0;
+  }
+  .top-bar .logo {
+    font-size: 13px; font-weight: 600; letter-spacing: 3px; color: #fff;
+    text-transform: uppercase;
+  }
+  .top-bar .nav-hint {
+    font-size: 12px; color: var(--dim); letter-spacing: 1.5px;
+  }
+
+  /* ---- main content ---- */
+  .home-main {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 56px 120px 56px;
+  }
+  .welcome-line {
+    font-size: clamp(32px, 6vw, 72px); font-weight: 700; letter-spacing: 2px;
+    line-height: 1.1; margin-bottom: 64px;
+  }
+  .welcome-line .dim { color: var(--dim); font-weight: 300; }
+
+  /* entry cards row */
+  .entry-row {
+    display: flex; gap: 80px; align-items: flex-start;
+  }
+  .entry-col {
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .entry-label {
+    font-size: 11px; letter-spacing: 4px; color: var(--dim); text-transform: uppercase;
+  }
+  .entry-btn {
+    display: inline-block; font-size: clamp(20px, 3vw, 28px); font-weight: 600;
+    letter-spacing: 3px; color: #fff; text-decoration: none; cursor: pointer;
+    padding: 14px 0; border-bottom: 2px solid rgba(255,255,255,0.15);
+    transition: border-color 0.4s; background: none; border-top: none;
+    border-left: none; border-right: none; font-family: inherit; text-transform: uppercase;
+  }
+  .entry-btn:hover { border-color: rgba(255,255,255,0.6); }
+  .entry-desc {
+    font-size: 13px; color: var(--dim); line-height: 1.6; max-width: 260px;
+  }
+
+  /* ---- bottom bar ---- */
+  .bottom-bar {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 56px 40px; flex-wrap: wrap; gap: 20px;
+  }
+  .contact-info { font-size: 12px; color: var(--dim); line-height: 2.2; letter-spacing: 0.5px; }
+  .contact-info span { color: #999; }
+  .copyright { font-size: 11px; color: #444; letter-spacing: 1px; }
+
+  /* ---- light beam (bottom-right) ---- */
+  .light-beam {
+    position: fixed; bottom: -120px; right: -180px; z-index: 0; pointer-events: none;
+    width: 700px; height: 500px;
+    background: radial-gradient(ellipse at 30% 70%, rgba(60,120,255,0.18) 0%, rgba(100,160,255,0.08) 30%, rgba(180,210,255,0.03) 55%, transparent 72%);
+    filter: blur(60px); transform: rotate(-15deg);
+  }
+  .light-beam-2 {
+    position: fixed; bottom: -80px; right: -100px; z-index: 0; pointer-events: none;
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse at 40% 60%, rgba(80,140,255,0.22) 0%, rgba(140,200,255,0.10) 35%, rgba(220,240,255,0.04) 60%, transparent 78%);
+    filter: blur(50px); transform: rotate(-20deg);
+  }
+  .light-streak {
+    position: fixed; bottom: -60px; right: -60px; z-index: 0; pointer-events: none;
+    width: 420px; height: 200px;
+    background: linear-gradient(200deg, rgba(30,80,200,0) 0%, rgba(50,110,230,0.12) 40%, rgba(140,190,255,0.06) 70%, transparent 100%);
+    filter: blur(35px); transform: rotate(-12deg);
+    border-radius: 60% 40% 50% 50%;
+  }
+
+  /* ================================================================
+     DETAIL PAGES (resume & portfolio)
+     ================================================================ */
+  .detail { display: none; min-height: 100vh; flex-direction: column; }
+  .detail.active { display: flex; }
+  .detail-header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 40px; background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1.5px;
+    padding: 8px 0; cursor: pointer; background: none; border: none; font-family: inherit;
+    transition: color 0.3s;
+  }
+  .back-btn:hover { color: #fff; }
+  .back-arrow { font-size: 16px; }
+  .detail-title {
+    font-size: 14px; font-weight: 600; letter-spacing: 4px; color: #666;
+    text-transform: uppercase;
+  }
+  .detail-spacer { width: 90px; }
+  .detail-content {
+    flex: 1; display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 24px 80px;
+  }
+  .detail-img {
+    max-width: min(900px, 100%); width: 100%; border-radius: 4px;
+    display: block;
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 768px) {
+    .top-bar { padding: 24px 28px 0; }
+    .home-main { padding: 0 28px 80px; }
+    .bottom-bar { padding: 0 28px 32px; flex-direction: column; align-items: flex-start; }
+    .entry-row { flex-direction: column; gap: 48px; }
+    .welcome-line { margin-bottom: 48px; }
+    .detail-header { padding: 18px 20px; }
+    .detail-spacer { display: none; }
+    .detail-content { padding: 28px 16px 60px; }
+    .light-beam, .light-beam-2, .light-streak { opacity: 0.5; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== LIGHT EFFECTS ==================== -->
+<div class="light-beam"></div>
+<div class="light-beam-2"></div>
+<div class="light-streak"></div>
+
+<!-- ==================== HOME ==================== -->
+<div id="homePage" class="home">
+
+  <div class="top-bar">
+    <div class="logo">STELLA_X</div>
+    <div class="nav-hint">RESUME &amp; PORTFOLIO 2026</div>
+  </div>
+
+  <div class="home-main">
+    <div class="welcome-line">
+      WELCOME TO<br>STELLA_X'S PAGE
+    </div>
+
+    <div class="entry-row">
+      <div class="entry-col">
+        <div class="entry-label">01</div>
+        <button class="entry-btn" onclick="showPage('resume')">RESUME</button>
+        <div class="entry-desc">
+          个人简历 · 教育背景 · 工作经历<br>专业技能 · 获奖荣誉
+        </div>
+      </div>
+      <div class="entry-col">
+        <div class="entry-label">02</div>
+        <button class="entry-btn" onclick="showPage('portfolio')">PORTFOLIO</button>
+        <div class="entry-desc">
+          项目作品 · 视觉设计 · AIGC动态<br>品牌主视觉 · 新媒体设计
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="contact-info">
+      <span>PHONE</span>&nbsp;&nbsp;15767911080<br>
+      <span>WECHAT</span>&nbsp;&nbsp;ck950809zdn010126<br>
+      <span>E-MAIL</span>&nbsp;&nbsp;16602043514@163.com
+    </div>
+    <div class="copyright">&copy; 2026 STELLA_X. ALL RIGHTS RESERVED.</div>
+  </div>
+
+</div>
+
+<!-- ==================== RESUME DETAIL ==================== -->
+<div id="resumePage" class="detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showPage('home')">
+      <span class="back-arrow">&#8592;</span> BACK
+    </button>
+    <div class="detail-title">RESUME</div>
+    <div class="detail-spacer"></div>
+  </div>
+  <div class="detail-content">
+    <img class="detail-img" src="resume_page_001.png" alt="陈星悦 - 简历">
+  </div>
+</div>
+
+<!-- ==================== PORTFOLIO DETAIL ==================== -->
+<div id="portfolioPage" class="detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showPage('home')">
+      <span class="back-arrow">&#8592;</span> BACK
+    </button>
+    <div class="detail-title">PORTFOLIO</div>
+    <div class="detail-spacer"></div>
+  </div>
+  <div class="detail-content">
+    <img class="detail-img" src="resume_page_002.png" alt="陈星悦 - 作品集">
+  </div>
+</div>
+
+<script>
+function showPage(page) {
+  document.getElementById('homePage').style.display = (page === 'home') ? '' : 'none';
+  document.getElementById('resumePage').classList.toggle('active', page === 'resume');
+  document.getElementById('portfolioPage').classList.toggle('active', page === 'portfolio');
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
