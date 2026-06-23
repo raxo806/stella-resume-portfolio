@@ -1,1 +1,0 @@
-# stella-resume-portfolio
