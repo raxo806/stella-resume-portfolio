@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STELLA_X — RESUME &amp; PORTFOLIO</title>
+<title>STELLA_X — RESUME &amp; PORTFOLIO &amp; VIDEO</title>
 <style>
   :root {
     --bg: #000;
@@ -11,6 +11,8 @@
     --muted: #888;
     --dim: #555;
     --border: rgba(255,255,255,0.08);
+    --glow: rgba(100,160,255,0.35);
+    --glow-soft: rgba(100,160,255,0.12);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -53,7 +55,7 @@
 
   /* entry cards row */
   .entry-row {
-    display: flex; gap: 80px; align-items: flex-start;
+    display: flex; gap: 64px; align-items: flex-start;
   }
   .entry-col {
     display: flex; flex-direction: column; gap: 18px;
@@ -65,10 +67,15 @@
     display: inline-block; font-size: clamp(20px, 3vw, 28px); font-weight: 600;
     letter-spacing: 3px; color: #fff; text-decoration: none; cursor: pointer;
     padding: 14px 0; border-bottom: 2px solid rgba(255,255,255,0.15);
-    transition: border-color 0.4s; background: none; border-top: none;
+    transition: border-color 0.4s, box-shadow 0.4s, text-shadow 0.4s;
+    background: none; border-top: none;
     border-left: none; border-right: none; font-family: inherit; text-transform: uppercase;
   }
-  .entry-btn:hover { border-color: rgba(255,255,255,0.6); }
+  .entry-btn:hover {
+    border-color: rgba(255,255,255,0.6);
+    text-shadow: 0 0 18px var(--glow);
+    box-shadow: 0 8px 32px -8px var(--glow);
+  }
   .entry-desc {
     font-size: 13px; color: var(--dim); line-height: 1.6; max-width: 260px;
   }
@@ -104,7 +111,7 @@
   }
 
   /* ================================================================
-     DETAIL PAGES (resume & portfolio)
+     DETAIL PAGES (resume & portfolio & video)
      ================================================================ */
   .detail { display: none; min-height: 100vh; flex-direction: column; }
   .detail.active { display: flex; }
@@ -118,9 +125,12 @@
     display: inline-flex; align-items: center; gap: 10px;
     font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1.5px;
     padding: 8px 0; cursor: pointer; background: none; border: none; font-family: inherit;
-    transition: color 0.3s;
+    transition: color 0.3s, text-shadow 0.3s;
   }
-  .back-btn:hover { color: #fff; }
+  .back-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 12px var(--glow-soft);
+  }
   .back-arrow { font-size: 16px; }
   .detail-title {
     font-size: 14px; font-weight: 600; letter-spacing: 4px; color: #666;
@@ -137,6 +147,70 @@
   }
 
   /* ================================================================
+     VIDEO ENTRY PAGE (two buttons)
+     ================================================================ */
+  .video-entry-content {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 40px 24px 80px; gap: 56px;
+  }
+  .video-entry-row {
+    display: flex; gap: 80px; align-items: center; flex-wrap: wrap; justify-content: center;
+  }
+  .video-entry-item {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .video-entry-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: clamp(16px, 2.5vw, 22px); font-weight: 600;
+    letter-spacing: 3px; color: #fff; text-decoration: none; cursor: pointer;
+    padding: 18px 48px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.03);
+    font-family: inherit; text-transform: uppercase;
+    transition: border-color 0.4s, box-shadow 0.4s, text-shadow 0.4s, background 0.4s;
+  }
+  .video-entry-btn:hover {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.06);
+    text-shadow: 0 0 18px var(--glow);
+    box-shadow: 0 0 40px -8px var(--glow), 0 0 80px -16px var(--glow-soft);
+  }
+  .video-entry-label {
+    font-size: 12px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  /* ================================================================
+     VIDEO LIST PAGES
+     ================================================================ */
+  .video-list-content {
+    flex: 1; display: flex; flex-wrap: wrap; gap: 40px;
+    padding: 40px 40px 80px; justify-content: center; align-items: flex-start;
+  }
+  .video-card {
+    position: relative; max-width: 560px; width: 100%;
+    border-radius: 4px; overflow: hidden;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+  .video-card:hover {
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 0 40px -12px var(--glow-soft);
+  }
+  .video-card video {
+    display: block; width: 100%; height: auto; background: #000;
+    outline: none;
+  }
+  .video-label {
+    position: absolute; top: 10px; left: 10px; z-index: 5;
+    font-size: 11px; letter-spacing: 1px; color: #fff;
+    background: rgba(0,0,0,0.72); padding: 5px 12px;
+    border-radius: 2px; pointer-events: none;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ================================================================
      RESPONSIVE
      ================================================================ */
   @media (max-width: 768px) {
@@ -149,6 +223,9 @@
     .detail-spacer { display: none; }
     .detail-content { padding: 28px 16px 60px; }
     .light-beam, .light-beam-2, .light-streak { opacity: 0.5; }
+    .video-entry-row { gap: 40px; flex-direction: column; }
+    .video-list-content { padding: 28px 16px 60px; gap: 24px; }
+    .video-card { max-width: 100%; }
   }
 </style>
 </head>
@@ -164,7 +241,7 @@
 
   <div class="top-bar">
     <div class="logo">STELLA_X</div>
-    <div class="nav-hint">RESUME &amp; PORTFOLIO 2026</div>
+    <div class="nav-hint">RESUME &amp; PORTFOLIO &amp; VIDEO 2026</div>
   </div>
 
   <div class="home-main">
@@ -185,6 +262,13 @@
         <button class="entry-btn" onclick="showPage('portfolio')">PORTFOLIO</button>
         <div class="entry-desc">
           项目作品 · 视觉设计 · AIGC动态<br>品牌主视觉 · 新媒体设计
+        </div>
+      </div>
+      <div class="entry-col">
+        <div class="entry-label">03</div>
+        <button class="entry-btn" onclick="showPage('video')">VIDEO</button>
+        <div class="entry-desc">
+          物料视频 · 广告视频<br>品牌短片 · 宣传片
         </div>
       </div>
     </div>
@@ -229,11 +313,87 @@
   </div>
 </div>
 
+<!-- ==================== VIDEO ENTRY ==================== -->
+<div id="videoPage" class="detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showPage('home')">
+      <span class="back-arrow">&#8592;</span> BACK
+    </button>
+    <div class="detail-title">VIDEO</div>
+    <div class="detail-spacer"></div>
+  </div>
+  <div class="video-entry-content">
+    <div class="video-entry-row">
+      <div class="video-entry-item">
+        <div class="video-entry-label">MATERIAL</div>
+        <button class="video-entry-btn" onclick="showPage('materialVideo')">物料视频</button>
+      </div>
+      <div class="video-entry-item">
+        <div class="video-entry-label">ADVERTISING</div>
+        <button class="video-entry-btn" onclick="showPage('adVideo')">广告视频</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MATERIAL VIDEO LIST ==================== -->
+<div id="materialVideoPage" class="detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showPage('video')">
+      <span class="back-arrow">&#8592;</span> BACK
+    </button>
+    <div class="detail-title">物料视频</div>
+    <div class="detail-spacer"></div>
+  </div>
+  <div class="video-list-content">
+    <div class="video-card">
+      <div class="video-label">秋冬体验物料.mp4</div>
+      <video controls preload="metadata">
+        <source src="秋冬体验物料.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-card">
+      <div class="video-label">万圣节章鱼系列物料.mp4</div>
+      <video controls preload="metadata">
+        <source src="万圣节章鱼系列物料.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-card">
+      <div class="video-label">中秋佳节物料.mp4</div>
+      <video controls preload="metadata">
+        <source src="中秋佳节物料.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== AD VIDEO LIST ==================== -->
+<div id="adVideoPage" class="detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showPage('video')">
+      <span class="back-arrow">&#8592;</span> BACK
+    </button>
+    <div class="detail-title">广告视频</div>
+    <div class="detail-spacer"></div>
+  </div>
+  <div class="video-list-content">
+    <div class="video-card">
+      <div class="video-label">耳机产品视频.mp4</div>
+      <video controls preload="metadata">
+        <source src="耳机产品视频.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
 <script>
 function showPage(page) {
   document.getElementById('homePage').style.display = (page === 'home') ? '' : 'none';
   document.getElementById('resumePage').classList.toggle('active', page === 'resume');
   document.getElementById('portfolioPage').classList.toggle('active', page === 'portfolio');
+  document.getElementById('videoPage').classList.toggle('active', page === 'video');
+  document.getElementById('materialVideoPage').classList.toggle('active', page === 'materialVideo');
+  document.getElementById('adVideoPage').classList.toggle('active', page === 'adVideo');
   window.scrollTo(0, 0);
 }
 </script>
