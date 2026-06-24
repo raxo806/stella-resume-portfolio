@@ -388,6 +388,7 @@
 
 <script>
 function showPage(page) {
+  document.querySelectorAll('video').forEach(function(v) { v.pause(); });
   document.getElementById('homePage').style.display = (page === 'home') ? '' : 'none';
   document.getElementById('resumePage').classList.toggle('active', page === 'resume');
   document.getElementById('portfolioPage').classList.toggle('active', page === 'portfolio');
